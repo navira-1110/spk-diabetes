@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7fb2f0">
+  <title>Prediksi Risiko Diabetes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="atas">
+    <div class="atas-isi">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+      </div>
+      <div>
+        <h1>Prediksi Risiko Diabetes</h1>
+        <p>Sistem pendukung keputusan dengan K-Nearest Neighbors</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab aktif" role="tab" aria-selected="true" data-target="panel-prediksi">Prediksi</button>
+    <button class="tab" role="tab" aria-selected="false" data-target="panel-data">Data Latih</button>
+  </nav>
+
+  <main>
+    <!-- ================= PREDIKSI ================= -->
+    <div id="panel-prediksi" class="panel aktif">
+      <section class="kartu">
+        <h2 class="judul-kartu">Data Pasien Baru</h2>
+        <form id="form-prediksi" novalidate>
+          <div class="grid">
+            <label>Usia <small>tahun</small>
+              <input id="usia" type="number" step="any" inputmode="decimal" value="42" required>
+            </label>
+            <label>BMI
+              <input id="bmi" type="number" step="any" inputmode="decimal" value="28.5" required>
+            </label>
+            <label>Glukosa <small>mg/dL</small>
+              <input id="glukosa" type="number" step="any" inputmode="decimal" value="130" required>
+            </label>
+            <label>Tekanan darah <small>mmHg</small>
+              <input id="tensi" type="number" step="any" inputmode="decimal" value="128" required>
+            </label>
+            <label class="penuh">Riwayat diabetes keluarga
+              <select id="riwayat">
+                <option value="1" selected>Ada</option>
+                <option value="0">Tidak ada</option>
+              </select>
+            </label>
+            <label class="penuh">Nilai K <small>jumlah tetangga</small>
+              <input id="k" type="number" min="1" step="1" inputmode="numeric" value="3" required>
+            </label>
+          </div>
+          <label class="centang">
+            <input type="checkbox" id="normalisasi">
+            <span>Pakai normalisasi Min-Max <small>(kosongkan untuk hitungan seperti di soal)</small></span>
+          </label>
+          <button type="submit" class="utama">Hitung Prediksi</button>
+        </form>
+      </section>
+
+      <details class="kartu lipat">
+        <summary>Lihat tabel data latih <span class="pil"><span class="jumlah-data">0</span> pasien</span></summary>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>Pasien</th><th>Usia</th><th>BMI</th><th>Glukosa</th><th>Tensi</th><th>Riwayat</th><th>Kelas</th></tr></thead>
+            <tbody id="isi-ringkas"></tbody>
+          </table>
+        </div>
+        <button type="button" id="ke-data" class="sekunder">Tambah atau hapus data</button>
+      </details>
+
+      <div id="hasil"></div>
+    </div>
+
+    <!-- ================= DATA LATIH ================= -->
+    <div id="panel-data" class="panel">
+      <section class="kartu">
+        <h2 class="judul-kartu">Tambah Data Pasien</h2>
+        <form id="form-data" novalidate>
+          <div class="grid">
+            <label>Usia
+              <input id="d-usia" type="number" step="any" inputmode="decimal" placeholder="40" required>
+            </label>
+            <label>BMI
+              <input id="d-bmi" type="number" step="any" inputmode="decimal" placeholder="27.5" required>
+            </label>
+            <label>Glukosa
+              <input id="d-glukosa" type="number" step="any" inputmode="decimal" placeholder="120" required>
+            </label>
+            <label>Tekanan darah
+              <input id="d-tensi" type="number" step="any" inputmode="decimal" placeholder="125" required>
+            </label>
+            <label>Riwayat keluarga
+              <select id="d-riwayat">
+                <option value="0">Tidak ada (0)</option>
+                <option value="1">Ada (1)</option>
+              </select>
+            </label>
+            <label>Kelas
+              <select id="d-kelas">
+                <option value="0">Risiko Rendah (0)</option>
+                <option value="1">Risiko Tinggi (1)</option>
+              </select>
+            </label>
+          </div>
+          <button type="submit" class="utama">Simpan Data</button>
+        </form>
+      </section>
+
+      <section class="kartu">
+        <h2 class="judul-kartu">Data Latih <span class="pil"><span class="jumlah-data">0</span> pasien</span></h2>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>Pasien</th><th>Usia</th><th>BMI</th><th>Glukosa</th><th>Tensi</th><th>Riwayat</th><th>Kelas</th><th></th></tr></thead>
+            <tbody id="isi-data"></tbody>
+          </table>
+        </div>
+        <button type="button" id="reset-data" class="sekunder">Kembalikan ke data awal</button>
+        <p class="catatan">Data tersimpan di browser HP ini, jadi tetap ada saat halaman ditutup dan dibuka lagi.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>Alat bantu keputusan, bukan pengganti diagnosis dokter.</footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
