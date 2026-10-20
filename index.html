@@ -80,6 +80,7 @@
     <div id="panel-data" class="panel">
       <section class="kartu">
         <h2 class="judul-kartu">Tambah Data Pasien</h2>
+        <p id="info-isi" class="info" hidden></p>
         <form id="form-data" novalidate>
           <div class="grid">
             <label>Usia
@@ -105,6 +106,7 @@
                 <option value="0">Risiko Rendah (0)</option>
                 <option value="1">Risiko Tinggi (1)</option>
               </select>
+              <small id="hint-kelas" class="hint">Terisi otomatis dari prediksi, boleh kamu ubah.</small>
             </label>
           </div>
           <button type="submit" class="utama">Simpan Data</button>
